@@ -28,7 +28,7 @@ body {
   text-align: center;
   padding: 15px 30px 30px 30px;
   margin-bottom: 50px;
-  box-shadow: 0 0px 3px grey;
+
   border-radius: 5px;
 }
 .content .card .info {
@@ -96,21 +96,15 @@ body {
 }
 
 .col-3 {
-  float: left;
+  float: right;
 }
 .slider {
   width: 100%;
-  height: 60px;
-
-  padding-left: 40px;
-
-  display: flex;
-  align-items: center;
 }
 
 .cost_size_range {
   border-radius: 5px;
-  margin-left: 30px;
+  margin-left: 10px;
   padding: 5px 10px;
   box-shadow: inset 0 0 2px gray;
 }
@@ -130,6 +124,7 @@ body {
   -webkit-appearance: none !important;
   width: 85%;
   height: 8px;
+  float: right;
   background: #08d195;
   border: none;
   border-radius: 10px;
