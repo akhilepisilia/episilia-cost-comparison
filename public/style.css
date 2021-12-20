@@ -150,6 +150,7 @@ body {
 
 .cost_summery {
   display: flex;
+  align-items: flex-start;
 }
 
 .info2 {
@@ -172,12 +173,12 @@ body {
 
 .content .card .two {
   width: 50%;
-  box-shadow: 0 0px 0px grey;
+  box-shadow: 0 0px 1px grey;
   margin: 10px;
 }
 .content .card .details .three {
   text-align: left;
-
+  line-height: 30px;
   display: list-item;
 }
 .value_sty {
