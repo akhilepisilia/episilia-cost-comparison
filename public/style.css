@@ -1,0 +1,193 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.content {
+  max-width: 1090px;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.content .card {
+  background: #fff;
+  width: 90%;
+  text-align: center;
+  padding: 15px 30px 30px 30px;
+  margin-bottom: 50px;
+  box-shadow: 0 5px 10px gray;
+}
+.content .card .info {
+  font-size: 23px;
+  font-weight: 800;
+  margin-top: 20px;
+  margin-bottom: 24px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e9e9e9;
+}
+
+.star {
+  color: red;
+}
+.info2 {
+  font-size: 15px;
+  font-weight: 800;
+  margin-top: 20px;
+}
+.content .card .details .panel .one {
+  font-size: 14px;
+}
+.content .card .details .one {
+  margin-top: 18px;
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+.content .card .hiddenpanel .one {
+  margin-top: 10px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+.content .card .details .panel .one {
+  font-size: 14px;
+}
+.content .card .submit {
+  outline: none;
+
+  height: 42px;
+
+  margin-top: 30px;
+  border-radius: 3px;
+  font-size: 18px;
+  width: 100%;
+  display: block;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  letter-spacing: 1px;
+
+  background: #08d195;
+  color: white;
+
+  border: 2px solid #08d195;
+}
+.content .submit:hover {
+  /*filter: brightness(90%);*/
+  background: white;
+  color: #08d195;
+}
+
+.col-3 {
+  float: left;
+}
+.slider {
+  width: 100%;
+  height: 60px;
+
+  padding-left: 40px;
+
+  display: flex;
+  align-items: center;
+}
+
+.cost_size_range {
+  border-radius: 5px;
+  margin-left: 30px;
+  padding: 5px 10px;
+  box-shadow: inset 0 0 2px gray;
+}
+.slider p {
+  font-size: 26px;
+  font-weight: 600;
+
+  color: black;
+}
+.slider .bottom_range_value {
+  font-size: 15px;
+  font-weight: 400;
+
+  color: gray;
+}
+.slider input[type="range"] {
+  -webkit-appearance: none !important;
+  width: 85%;
+  height: 8px;
+  background: #08d195;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+}
+.slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  width: 30px;
+  height: 30px;
+  background: #fcfcfc;
+  border: 2px solid #08d195;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.slider input[type="range"]::-webkit-slider-thumb:hover {
+  background: #08d195;
+}
+
+.cost_summery {
+  display: flex;
+}
+
+.info2 {
+  font-size: 15px;
+  font-weight: 800;
+  margin-top: 20px;
+}
+
+.content .card .details .panel .one {
+  font-size: 14px;
+}
+.content .card .details .one {
+  margin-top: 18px;
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.content .card .two {
+  width: 50%;
+  box-shadow: none;
+  margin: 10px;
+}
+.content .card .details .three {
+  text-align: left;
+
+  display: list-item;
+}
+.value_sty {
+  font-weight: 800;
+}
+
+.piechart .info1 {
+  font-size: 18px;
+  font-weight: 800;
+  text-align: left;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #e9e9e9;
+}

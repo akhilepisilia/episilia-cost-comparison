@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js" integrity="sha512-R/QOHLpV1Ggq22vfDAWYOaMd5RopHrJNMxi8/lJu8Oihwi4Ho4BRFeiMiCefn9rasajKjnx9/fTQ/xkWnkDACg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="data.json"></script>
+
+    <title>cost comparison</title>
+</head>
+<body>
+
+    <div class="content">
+    
+        <div class="card one">
+          <div class="info">Average Daily Ingest</div>
+          <div class="details">
+
+              <div class="one">
+                
+                <div class="col-3 slider">
+                  
+                  <input type="range" id="dataInput"  min=100 max=10000 step="50" value=1000 name="c4" onchange="updateChart()"  oninput="rangeValue.innerText = this.value"/>
+        
+                <div class="cost_size_range">
+                  <p id="rangeValue">1000</p>
+                  <p class="bottom_range_value">GB/day</p>
+                </div>
+                </div>
+             </div>
+            
+           
+            <div class="one">
+             
+        
+              <canvas id="myChart"></canvas> 
+            </div>
+  
+           
+         
+  
+          </div>
+        </div>
+      
+       
+  
+  
+  
+        <div class="card">
+            <div class="info">Episilia Monthly Cost </div>
+            <div class="cost_summery">
+            <div class="card one two">
+            <div class="details">
+                <div class="one"><span>Total cost</span><span class="value_sty" id="tc"></span></div>
+                <div class="one"><span>License cost</span><span class="value_sty" id="lc"></span></div>
+                <div class="one"><span>Infra cost</span><span class="value_sty" id="ic"></span></div>
+              
+            </div> 
+            <div class=" piechart">
+                <div class="info1">Infra Cost Breakdown</div>
+                <canvas id="myPieChart"></canvas> 
+            
+            </div>   
+              </div>
+  
+
+              <div class="card one two">
+                <div class="details">
+
+                        <div class="one three">The cost calulator is based on deployment on AWS cloud currently.</div>
+                        <div class="one three">License pricing is not included in the above. Kafka cluster cost is not included also.</div>
+                        <div class="one three">Episilia is supported on Intel Advanced Vector Extensions(AVX) CPUs.</div>
+                   
+                 </div> 
+                </div> 
+            </div>
+
+          </div>
+
+
+  
+      </div>
+
+
+
+
+   
+    <script>
+        /* 
+        1000 gb - 70 -70 
+1000 gb -200 -300
+
+100 gb - 100*200/1000
+2000 gb - 2000*200/1000
+
+input*min value/1000
+        
+        */
+
+
+
+function updateData(inputGB){
+
+    for(j in cost_data){
+    
+        if(inputGB >= cost_data[j]["value"] &&  inputGB <= cost_data[j]["max_value"]){
+          
+            Infra_cost =Math.round( (inputGB *30)/1000 * cost_data[j]["Infra cost per TB"])
+            
+            if(inputGB > 500){
+                License_cost = Math.round( (inputGB *30)/1000 * cost_data[j]["License cost per TB"])
+            }
+            else
+            {
+                License_cost =  cost_data[j]["License cost per TB"]
+            }
+    
+            Total_cost = License_cost + Infra_cost
+            compute=cost_data[j]["Compute"]
+            storage=cost_data[j]["Storage"]            
+        }
+    
+    }
+
+    for(i in mydata){
+      
+
+        mydata[i]["min_value"]=Math.round((inputGB*mydata[i]["min"]/1000)*30)
+        mydata[i]["max_value"]=Math.round((inputGB*mydata[i]["max"]/1000)*30)
+        if (mydata[i]["min_value"] ==  mydata[i]["max_value"])
+        {
+            mydata[i]["min_value"]=0
+        }
+        mydata[i]["dispaly_max_value"]=mydata[i]["max_value"]-mydata[i]["min_value"]
+        if(mydata[i]["name"] == "episilia")
+        {
+            mydata[i]["min_value"]=0
+            mydata[i]["max_value"]=Total_cost
+            mydata[i]["dispaly_max_value"]=mydata[i]["max_value"]-mydata[i]["min_value"]
+            
+        }
+    }
+}
+function updatehtml(){
+    var tc = document.getElementById("tc");
+    var ic = document.getElementById("ic");
+    var lc = document.getElementById("lc");
+    tc.innerHTML=`$${Total_cost}`;
+    ic.innerHTML=`$${Infra_cost}`;
+    lc.innerHTML=`$${License_cost}`;
+}
+var mydata = JSON.parse(data);
+var Infra_cost = 0 , License_cost = 0 ,Total_cost = 0 , compute=0 , storage=0;
+var cost_data = JSON.parse(episilia_cost_data);
+var dataInput = document.getElementById("dataInput");
+updateData(dataInput.value) 
+updatehtml()
+console.log(mydata)
+
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['episilia', 'Humio','chaossearch','Google', 'ELK',  'Splunk',  'logz.io', 'datadog', 'Sumo'],
+            datasets: [{
+                label: '# of Votes',
+                data: [mydata["episilia"]["min_value"], mydata["Humio"]["min_value"], mydata["chaossearch"]["min_value"], mydata["Google"]["min_value"], mydata["ELK"]["min_value"], mydata["Splunk"]["min_value"], mydata["logz_io"]["min_value"], mydata["datadog"]["min_value"], mydata["Sumo"]["min_value"]],
+                backgroundColor: [
+                    'rgba(148, 148, 148, 1)',
+                    'rgba(148, 148, 148, 1)',
+                     'rgba(148, 148, 148, 1)',
+                     'rgba(148, 148, 148, 1)',
+                     'rgba(148, 148, 148, 1)',
+                     'rgba(148, 148, 148, 1)',
+                     'rgba(148, 148, 148, 1)',
+                     'rgba(148, 148, 148, 1)',
+                     'rgba(148, 148, 148, 1)',
+                ],
+                borderColor: [
+                'rgba(148, 148, 148, 1)',
+                'rgba(148, 148, 148, 1)',
+                 'rgba(148, 148, 148, 1)',
+                 'rgba(148, 148, 148, 1)',
+                 'rgba(148, 148, 148, 1)',
+                 'rgba(148, 148, 148, 1)',
+                 'rgba(148, 148, 148, 1)',
+                 'rgba(148, 148, 148, 1)',
+                 'rgba(148, 148, 148, 1)',
+                ],
+                borderWidth: 1,
+                datalabels:{
+                    display:false
+                },
+                // categoryPercentage: 1.0
+// barPercentage: 0.5
+            },
+            {
+                label: '# of Votes',
+                data: [mydata["episilia"]["dispaly_max_value"], mydata["Humio"]["dispaly_max_value"], mydata["chaossearch"]["dispaly_max_value"], mydata["Google"]["dispaly_max_value"], mydata["ELK"]["dispaly_max_value"], mydata["Splunk"]["dispaly_max_value"], mydata["logz_io"]["dispaly_max_value"], mydata["datadog"]["dispaly_max_value"], mydata["Sumo"]["dispaly_max_value"]],
+                backgroundColor: [
+                    '#41E799',
+                    'rgba(65, 191, 231, 1)',
+                    'rgba(65, 191, 231, 1)',
+                    'rgba(65, 191, 231, 1)',
+                    'rgba(65, 191, 231, 1)',
+                    'rgba(65, 191, 231, 1)',
+                    'rgba(65, 191, 231, 1)',
+                    'rgba(65, 191, 231, 1)',
+                    'rgba(65, 191, 231, 1)'
+                    
+                ],
+                borderColor: [
+                '#41E799',
+                'rgba(65, 191, 231, 1)',
+                'rgba(65, 191, 231, 1)',
+                'rgba(65, 191, 231, 1)',
+                'rgba(65, 191, 231, 1)',
+                'rgba(65, 191, 231, 1)',
+                'rgba(65, 191, 231, 1)',
+                'rgba(65, 191, 231, 1)',
+                'rgba(65, 191, 231, 1)'
+                ],
+                random:[
+                `$${mydata["episilia"]["max_value"]}`,
+                `$${mydata["Humio"]["min_value"]} - $${mydata["Humio"]["max_value"]}`,
+                `$${mydata["chaossearch"]["max_value"]}`,
+                `$${mydata["Google"]["max_value"]}`,
+                `$${mydata["ELK"]["min_value"]} - $${mydata["ELK"]["max_value"]}`,
+                `$${mydata["Splunk"]["min_value"]} - $${mydata["Splunk"]["max_value"]}`,
+                `$${mydata["logz_io"]["min_value"]} - $${mydata["logz_io"]["max_value"]}`,
+                `$${mydata["datadog"]["min_value"]} - $${mydata["datadog"]["max_value"]}`,
+                `$${mydata["Sumo"]["min_value"]} - $${mydata["Sumo"]["max_value"]}`,
+                
+                ],
+                borderWidth: 1,
+               // categoryPercentage: 1.0
+// barPercentage: 0.5
+            }]
+        },
+        plugins:[ChartDataLabels],
+        options: {
+            plugins: {
+                legend: {
+                    display: false,
+                    
+                labels: {
+                    // This more specific font property overrides the global property
+                    font: {
+                        weight: 700,
+                        size: 12
+                    },
+                }
+                },
+
+                datalabels:{
+                    color: 'black',
+                    anchor:'end',
+                    align:'top',
+                    offset: 5,
+                    formatter: (value,context)=>{
+                        return context.dataset.random[context.dataIndex];
+                    },
+                    font: {
+                      weight: 600,
+                      size: 12,
+                      family:"'Lato', 'Arial','sans-serif'",
+                    }
+                }
+            },
+            
+
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    stacked: true,
+                    ticks: {
+                        padding: 10
+                      }
+                },
+                x: {
+                    stacked: true,
+                    ticks: {
+                        padding: 10
+                      }
+                }
+            },
+           
+           
+            layout: {
+                padding: {
+                    left: 0,
+                    right: 0,
+                    top: 25,
+                    bottom: 0
+                }
+            },
+            tooltips: {enabled: false},
+            hover: {mode: null}
+
+
+        },
+       
+
+
+    });
+
+/// pie chart
+    const piectx = document.getElementById('myPieChart').getContext('2d');
+    const myPieChart = new Chart(piectx, {
+        type: 'pie',
+        data: {
+            labels: [`Compute: ${compute}` , `Storage: ${storage}`],
+            datasets: [{
+                label: '# of Votes',
+                data: [compute, storage],
+                backgroundColor: [
+              
+                '#E289F2',
+                '#855CF8'
+              
+                ],
+                borderColor: [
+                  
+                    '#E289F2',
+                    '#855CF8'
+                  
+                ],
+                borderWidth: 1
+            }]
+        },
+        
+    plugins:[ChartDataLabels],
+    options: {
+        plugins: {
+
+            datalabels:{
+                color: 'whitesmoke',
+                anchor:'center',
+                offset: 5,
+                
+                font: {
+                  weight: 400,
+                  size: 18,
+                  family:"'Lato', 'Arial','sans-serif'",
+                }
+            }
+        },
+        tooltips: {enabled: false},
+        hover: {mode: null}
+      }
+       
+    }
+    );
+
+function updateChart(){
+    updateValues=dataInput.value;
+    updateData(updateValues)
+    myChart.data.datasets[0].data=[mydata["episilia"]["min_value"], mydata["Humio"]["min_value"], mydata["chaossearch"]["min_value"], mydata["Google"]["min_value"], mydata["ELK"]["min_value"], mydata["Splunk"]["min_value"], mydata["logz_io"]["min_value"], mydata["datadog"]["min_value"], mydata["Sumo"]["min_value"]],
+    myChart.data.datasets[1].data= [mydata["episilia"]["dispaly_max_value"], mydata["Humio"]["dispaly_max_value"], mydata["chaossearch"]["dispaly_max_value"], mydata["Google"]["dispaly_max_value"], mydata["ELK"]["dispaly_max_value"], mydata["Splunk"]["dispaly_max_value"], mydata["logz_io"]["dispaly_max_value"], mydata["datadog"]["dispaly_max_value"], mydata["Sumo"]["dispaly_max_value"]],
+    myChart.data.datasets[1].random=[
+    `$${mydata["episilia"]["max_value"]}`,
+                `$${mydata["Humio"]["min_value"]} - $${mydata["Humio"]["max_value"]}`,
+                `$${mydata["chaossearch"]["max_value"]}`,
+                `$${mydata["Google"]["max_value"]}`,
+                `$${mydata["ELK"]["min_value"]} - $${mydata["ELK"]["max_value"]}`,
+                
+                `$${mydata["Splunk"]["min_value"]} - $${mydata["Splunk"]["max_value"]}`,
+               
+                `$${mydata["logz_io"]["min_value"]} - $${mydata["logz_io"]["max_value"]}`,
+                `$${mydata["datadog"]["min_value"]} - $${mydata["datadog"]["max_value"]}`,
+                `$${mydata["Sumo"]["min_value"]} - $${mydata["Sumo"]["max_value"]}`,
+    
+    ]
+    myPieChart.data.labels=[`Compute: ${compute}` , `Storage: ${storage}`];
+    myPieChart.data.datasets[0].data=[compute, storage]
+    updatehtml()
+    myChart.update();
+    myPieChart.update();
+}
+    </script>
+       
+</body>
+</html>

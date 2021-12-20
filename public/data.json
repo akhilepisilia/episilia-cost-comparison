@@ -1,0 +1,278 @@
+data =`{ 
+    "episilia":{
+        
+        "name":"episilia",
+        "min":70,
+        "max":70,
+        "min_value":0,
+        "max_value":0,
+        "dispaly_max_value":0
+
+    },
+    "Humio":{
+        
+        "name":"Humio",
+        "min":200,
+        "max":300,
+        "min_value":0,
+        "max_value":0,
+        "dispaly_max_value":0
+
+    },
+    "chaossearch":{
+        
+        "name":"chaossearch",
+        "min":400,
+        "max":400,
+        "min_value":0,
+        "max_value":0,
+        "dispaly_max_value":0
+
+    },
+    "Google":{
+        
+        "name":"Google",
+        "min":475,
+        "max":475,
+        "min_value":0,
+        "max_value":0,
+        "dispaly_max_value":0
+
+    },
+    "ELK":{
+        
+        "name":"ELK",
+        "min":200,
+        "max":500,
+        "min_value":0,
+        "max_value":0,
+        "dispaly_max_value":0
+
+    },
+   
+    "Splunk":{
+        
+        "name":"Splunk",
+        "min":300,
+        "max":1000,
+        "min_value":0,
+        "max_value":0,
+        "dispaly_max_value":0
+
+    },
+   
+    "logz_io":{
+        
+        "name":"logz.io",
+        "min":500,
+        "max":1000,
+        "min_value":0,
+        "max_value":0,
+        "dispaly_max_value":0
+
+    },
+    "datadog":{
+        
+        "name":"datadog",
+        "min":500,
+        "max":1000,
+        "min_value":0,
+        "max_value":0,
+        "dispaly_max_value":0
+
+    },
+   
+     "Sumo":{
+        
+        "name":"Sumo",
+        "min":500,
+        "max":1200,
+        "min_value":0,
+        "max_value":0,
+        "dispaly_max_value":0
+
+    }
+
+}`;
+
+
+episilia_cost_data =`{
+
+    "1":{
+        "value":100,
+        "max_value":149,
+        "Compute":50,
+        "Storage":50,
+        "Infra cost per TB":50,
+        "License cost per TB":99,
+        "Infra cost":0,
+        "License cost":0,
+        "Total cost":0
+    },
+    "2":{
+        "value":150,
+        "max_value":199,
+        "Compute":50,
+        "Storage":50,
+        "Infra cost per TB":45,
+        "License cost per TB":99,
+        "Infra cost":0,
+        "License cost":0,
+        "Total cost":0
+    },
+    "3":{
+        "value":200,
+        "max_value":249,
+        "Compute":50,
+        "Storage":50,
+        "Infra cost per TB":40,
+        "License cost per TB":99,
+        "Infra cost":0,
+        "License cost":0,
+        "Total cost":0
+    },
+    "4":{
+        "value":250,
+        "max_value":299,
+        "Compute":50,
+        "Storage":50,
+        "Infra cost per TB":35,
+        "License cost per TB":99,
+        "Infra cost":0,
+        "License cost":0,
+        "Total cost":0
+    },
+    "5":{
+        "value":300,
+        "max_value":399,
+        "Compute":50,
+        "Storage":50,
+        "Infra cost per TB":30,
+        "License cost per TB":99,
+        "Infra cost":0,
+        "License cost":0,
+        "Total cost":0
+    },
+    "6":{
+        "value":400,
+        "max_value":500,
+        "Compute":50,
+        "Storage":50,
+        "Infra cost per TB":25,
+        "License cost per TB":99,
+        "Infra cost":0,
+        "License cost":0,
+        "Total cost":0
+    },
+    "7":{
+        "value":501,
+        "max_value":999,
+        "Compute":40,
+        "Storage":60,
+        "Infra cost per TB":20,
+        "License cost per TB":50,
+        "Infra cost":0,
+        "License cost":0,
+        "Total cost":0
+    },
+    "8":{
+        "value":1000,
+        "max_value":1999,
+        "Compute":40,
+        "Storage":60,
+        "Infra cost per TB":20,
+        "License cost per TB":50,
+        "Infra cost":0,
+        "License cost":0,
+        "Total cost":0
+    },
+    "9":{
+        "value":2000,
+        "max_value":2999,
+        "Compute":30,
+        "Storage":70,
+        "Infra cost per TB":20,
+        "License cost per TB":50,
+        "Infra cost":0,
+        "License cost":0,
+        "Total cost":0
+    },
+    "10":{
+        "value":3000,
+        "max_value":3999,
+        "Compute":30,
+        "Storage":70,
+        "Infra cost per TB":20,
+        "License cost per TB":50,
+        "Infra cost":0,
+        "License cost":0,
+        "Total cost":0
+    },
+    "11":{
+        "value":4000,
+        "max_value":4999,
+        "Compute":25,
+        "Storage":75,
+        "Infra cost per TB":20,
+        "License cost per TB":50,
+        "Infra cost":0,
+        "License cost":0,
+        "Total cost":0
+    },
+    "12":{
+        "value":5000,
+        "max_value":5999,
+        "Compute":25,
+        "Storage":75,
+        "Infra cost per TB":20,
+        "License cost per TB":50,
+        "Infra cost":0,
+        "License cost":0,
+        "Total cost":0
+    },
+    "13":{
+        "value":6000,
+        "max_value":6999,
+        "Compute":25,
+        "Storage":75,
+        "Infra cost per TB":20,
+        "License cost per TB":50,
+        "Infra cost":0,
+        "License cost":0,
+        "Total cost":0
+    },
+    "14":{
+        "value":7000,
+        "max_value":7999,
+        "Compute":25,
+        "Storage":75,
+        "Infra cost per TB":20,
+        "License cost per TB":50,
+        "Infra cost":0,
+        "License cost":0,
+        "Total cost":0
+    },
+    "15":{
+        "value":8000,
+        "max_value":8999,
+        "Compute":25,
+        "Storage":75,
+        "Infra cost per TB":20,
+        "License cost per TB":50,
+        "Infra cost":0,
+        "License cost":0,
+        "Total cost":0
+    },
+    "16":{
+        "value":9000,
+        "max_value":10000,
+        "Compute":25,
+        "Storage":75,
+        "Infra cost per TB":20,
+        "License cost per TB":50,
+        "Infra cost":0,
+        "License cost":0,
+        "Total cost":0
+    }
+
+ }`;
