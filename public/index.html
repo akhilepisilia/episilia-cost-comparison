@@ -160,27 +160,27 @@ var cost_data = JSON.parse(episilia_cost_data);
 var dataInput = document.getElementById("dataInput");
 updateData(dataInput.value) 
 updatehtml()
-console.log(mydata)
 
+// [['Episilia'], ['Humio',"(3x-4x)"],['Chaossearch',"(6x)"],['Google',"(7x)"], ['ELK',"(3x-7x)"],  ['Splunk',"(4x-14x)"],  ['Logz.io',"(7x-14x)"], ['Datadog',"(7x-14x)"], ['SumoLogic',"(14x-29x)"]],
 
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Episilia', 'Humio','Chaossearch','Google', 'ELK',  'Splunk',  'Logz.io', 'Datadog', 'SumoLogic'],
+            labels: [['Episilia'], ['Humio',"3x-4x"],['Chaossearch',"6x"],['Google',"7x"], ['ELK',"3x-7x"],  ['Splunk',"4x-14x"],  ['Logz.io',"7x-14x"], ['Datadog',"7x-14x"], ['SumoLogic',"14x-29x"]],
             datasets: [{
                 label: 'Min Cost',
                 data: [mydata["episilia"]["min_value"], mydata["Humio"]["min_value"], mydata["chaossearch"]["min_value"], mydata["Google"]["min_value"], mydata["ELK"]["min_value"], mydata["Splunk"]["min_value"], mydata["logz_io"]["min_value"], mydata["datadog"]["min_value"], mydata["Sumo"]["min_value"]],
                 backgroundColor: [
-                    'rgba(148, 148, 148, 1)',
-                    'rgba(148, 148, 148, 1)',
-                     'rgba(148, 148, 148, 1)',
-                     'rgba(148, 148, 148, 1)',
-                     'rgba(148, 148, 148, 1)',
-                     'rgba(148, 148, 148, 1)',
-                     'rgba(148, 148, 148, 1)',
-                     'rgba(148, 148, 148, 1)',
-                     'rgba(148, 148, 148, 1)',
+                'rgba(148, 148, 148, 1)',
+                'rgba(148, 148, 148, 1)',
+                 'rgba(148, 148, 148, 1)',
+                 'rgba(148, 148, 148, 1)',
+                 'rgba(148, 148, 148, 1)',
+                 'rgba(148, 148, 148, 1)',
+                 'rgba(148, 148, 148, 1)',
+                 'rgba(148, 148, 148, 1)',
+                 'rgba(148, 148, 148, 1)',
                 ],
                 borderColor: [
                 'rgba(148, 148, 148, 1)',
@@ -213,7 +213,6 @@ console.log(mydata)
                     'rgba(65, 191, 231, 1)',
                     'rgba(65, 191, 231, 1)',
                     'rgba(65, 191, 231, 1)'
-                    
                 ],
                 borderColor: [
                 '#41E799',
