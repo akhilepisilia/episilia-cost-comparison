@@ -98,6 +98,7 @@
 input*min value/1000
         
         */
+        console.log(window.innerWidth);
         function kFormatter(num) {
             return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
         }
@@ -238,6 +239,7 @@ updatehtml()
                 
                 ],
                 borderWidth: 0,
+                borderRadius: 2
                // categoryPercentage: 1.0
 // barPercentage: 0.5
             }]
