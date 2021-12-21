@@ -17,7 +17,6 @@
     <div class="content">
     
         <div class="card one">
-          <div class="info">Compare & Save</div>
           <div class="details">
 
               <div class="one">
@@ -168,9 +167,9 @@ console.log(mydata)
     const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Episilia', 'Humio','Chaossearch','Google', 'ELK',  'Splunk',  'logz.io', 'Datadog', 'Sumo logic'],
+            labels: ['Episilia', 'Humio','Chaossearch','Google', 'ELK',  'Splunk',  'Logz.io', 'Datadog', 'SumoLogic'],
             datasets: [{
-                label: '# of Votes',
+                label: 'Min Cost',
                 data: [mydata["episilia"]["min_value"], mydata["Humio"]["min_value"], mydata["chaossearch"]["min_value"], mydata["Google"]["min_value"], mydata["ELK"]["min_value"], mydata["Splunk"]["min_value"], mydata["logz_io"]["min_value"], mydata["datadog"]["min_value"], mydata["Sumo"]["min_value"]],
                 backgroundColor: [
                     'rgba(148, 148, 148, 1)',
@@ -194,7 +193,7 @@ console.log(mydata)
                  'rgba(148, 148, 148, 1)',
                  'rgba(148, 148, 148, 1)',
                 ],
-                borderWidth: 1,
+                borderWidth: 0,
                 datalabels:{
                     display:false
                 },
@@ -202,7 +201,7 @@ console.log(mydata)
 // barPercentage: 0.5
             },
             {
-                label: '# of Votes',
+                label: 'Max Cost',
                 data: [mydata["episilia"]["dispaly_max_value"], mydata["Humio"]["dispaly_max_value"], mydata["chaossearch"]["dispaly_max_value"], mydata["Google"]["dispaly_max_value"], mydata["ELK"]["dispaly_max_value"], mydata["Splunk"]["dispaly_max_value"], mydata["logz_io"]["dispaly_max_value"], mydata["datadog"]["dispaly_max_value"], mydata["Sumo"]["dispaly_max_value"]],
                 backgroundColor: [
                     '#41E799',
@@ -229,24 +228,36 @@ console.log(mydata)
                 ],
                 random:[
                 `$${kFormatter(mydata["episilia"]["max_value"])}`,
-                `$${kFormatter(mydata["Humio"]["min_value"])} - $${kFormatter(mydata["Humio"]["max_value"])}`,
+                `$${kFormatter(mydata["Humio"]["min_value"])}-$${kFormatter(mydata["Humio"]["max_value"])}`,
                 `$${kFormatter(mydata["chaossearch"]["max_value"])}`,
                 `$${kFormatter(mydata["Google"]["max_value"])}`,
-                `$${kFormatter(mydata["ELK"]["min_value"])} - $${kFormatter(mydata["ELK"]["max_value"])}`,
-                `$${kFormatter(mydata["Splunk"]["min_value"])} - $${kFormatter(mydata["Splunk"]["max_value"])}`,
-                `$${kFormatter(mydata["logz_io"]["min_value"])} - $${kFormatter(mydata["logz_io"]["max_value"])}`,
-                `$${kFormatter(mydata["datadog"]["min_value"])} - $${kFormatter(mydata["datadog"]["max_value"])}`,
-                `$${kFormatter(mydata["Sumo"]["min_value"])} - $${kFormatter(mydata["Sumo"]["max_value"])}`,
+                `$${kFormatter(mydata["ELK"]["min_value"])}-$${kFormatter(mydata["ELK"]["max_value"])}`,
+                `$${kFormatter(mydata["Splunk"]["min_value"])}-$${kFormatter(mydata["Splunk"]["max_value"])}`,
+                `$${kFormatter(mydata["logz_io"]["min_value"])}-$${kFormatter(mydata["logz_io"]["max_value"])}`,
+                `$${kFormatter(mydata["datadog"]["min_value"])}-$${kFormatter(mydata["datadog"]["max_value"])}`,
+                `$${kFormatter(mydata["Sumo"]["min_value"])}-$${kFormatter(mydata["Sumo"]["max_value"])}`,
                 
                 ],
-                borderWidth: 1,
+                borderWidth: 0,
                // categoryPercentage: 1.0
 // barPercentage: 0.5
             }]
         },
         plugins:[ChartDataLabels],
         options: {
+            responsive: true,
             plugins: {
+                title: {
+                    display: true,
+                    text: 'Monthly   Cost',
+                    position:'left',
+                    color:"black",
+                    font: {
+                        family: '"Poppins", "sans-serif"',
+                        size: 16,
+                        weight: 400,
+                    }
+                },
                 legend: {
                     display: false,
                     
@@ -264,9 +275,15 @@ console.log(mydata)
                     },
                     font: {
                       weight: 500,
-                      size: 13,
-                      family:"'Lato', 'Arial','sans-serif'",
+                      //size: 13,
+                      family: '"Poppins", "sans-serif"',
                     }
+                },
+                tooltip: {
+                    // Disable the on-canvas tooltip
+                    enabled: false,
+                    //displayColors: false,
+    
                 }
             },
             
@@ -281,22 +298,30 @@ console.log(mydata)
                     ticks: {
                         
                         padding: 10,
+                        callback: function (value, index, values) {
+                            return '$' + value;
+                        },
                       },
                      
                 },
                 
                 x: {
                     stacked: true,
+                    grid: {
+                        display: false
+                      },
                     ticks: {
                        
-                        padding: 10,
+                        padding: 5,
                         color:"black",
                         font: {
                             size: 12.5,
-                            weight: 600,
+                            weight: 400,
+                            family: '"Poppins", "sans-serif"',
                         }
                       }
                 }
+                
                 
             },
            
@@ -304,14 +329,14 @@ console.log(mydata)
             layout: {
                 padding: {
                     left: 0,
-                    right: 0,
+                    right: 5,
                     top: 25,
                     bottom: 0
                 }
             },
-            tooltips: {enabled: false},
-            hover: {mode: null}
-
+            
+            hover: {mode: null},
+            
 
         },
        
@@ -377,14 +402,14 @@ function updateChart(){
     myChart.data.datasets[1].data= [mydata["episilia"]["dispaly_max_value"], mydata["Humio"]["dispaly_max_value"], mydata["chaossearch"]["dispaly_max_value"], mydata["Google"]["dispaly_max_value"], mydata["ELK"]["dispaly_max_value"], mydata["Splunk"]["dispaly_max_value"], mydata["logz_io"]["dispaly_max_value"], mydata["datadog"]["dispaly_max_value"], mydata["Sumo"]["dispaly_max_value"]],
     myChart.data.datasets[1].random=[
     `$${kFormatter(mydata["episilia"]["max_value"])}`,
-    `$${kFormatter(mydata["Humio"]["min_value"])} - $${kFormatter(mydata["Humio"]["max_value"])}`,
+    `$${kFormatter(mydata["Humio"]["min_value"])}-$${kFormatter(mydata["Humio"]["max_value"])}`,
     `$${kFormatter(mydata["chaossearch"]["max_value"])}`,
     `$${kFormatter(mydata["Google"]["max_value"])}`,
-    `$${kFormatter(mydata["ELK"]["min_value"])} - $${kFormatter(mydata["ELK"]["max_value"])}`,
-    `$${kFormatter(mydata["Splunk"]["min_value"])} - $${kFormatter(mydata["Splunk"]["max_value"])}`,
-    `$${kFormatter(mydata["logz_io"]["min_value"])} - $${kFormatter(mydata["logz_io"]["max_value"])}`,
-    `$${kFormatter(mydata["datadog"]["min_value"])} - $${kFormatter(mydata["datadog"]["max_value"])}`,
-    `$${kFormatter(mydata["Sumo"]["min_value"])} - $${kFormatter(mydata["Sumo"]["max_value"])}`,
+    `$${kFormatter(mydata["ELK"]["min_value"])}-$${kFormatter(mydata["ELK"]["max_value"])}`,
+    `$${kFormatter(mydata["Splunk"]["min_value"])}-$${kFormatter(mydata["Splunk"]["max_value"])}`,
+    `$${kFormatter(mydata["logz_io"]["min_value"])}-$${kFormatter(mydata["logz_io"]["max_value"])}`,
+    `$${kFormatter(mydata["datadog"]["min_value"])}-$${kFormatter(mydata["datadog"]["max_value"])}`,
+    `$${kFormatter(mydata["Sumo"]["min_value"])}-$${kFormatter(mydata["Sumo"]["max_value"])}`,
     
     ]
     
