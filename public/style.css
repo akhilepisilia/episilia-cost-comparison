@@ -148,6 +148,15 @@ body {
   align-items: initial;
 }
 
+.one ul {
+  margin-left: 10%;
+}
+
+.footnote_graph {
+  float: left;
+  list-style-type: "†   ";
+}
+
 .info2 {
   font-size: 15px;
   font-weight: 800;
