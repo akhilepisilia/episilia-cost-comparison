@@ -41,8 +41,11 @@
               <canvas id="myChart"></canvas> 
             </div>
             <div class="one">
-           <p style="font-size: 12px;color: gray;">Pricing based on each company's publicly available data.</p>
-            </div>
+                <ul>
+                    <li class="footnote_graph" style="font-size: 12px;color: gray;">Each bar in the chart indicates monthly cost range for the respective product, depending on the version and features enabled.</li>
+                    <li class="footnote_graph" style="font-size: 12px;color: gray;">Pricing based on each company's publicly available data.</li>
+                </ul>
+           </div>
   
           </div>
         </div>
@@ -99,8 +102,21 @@ input*min value/1000
         
         */
         console.log(window.innerWidth);
-        function kFormatter(num) {
-            return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
+        function kFormatter(num , boolean_display) {
+            var result;
+            if (Math.abs(num) > 999) {
+                result= Math.sign(num)*((Math.abs(num)/1000).toFixed(1))
+                if (boolean_display){
+                result = Math.round(result)
+                }
+                result =`${result}k`
+             } 
+             else{
+
+                result=Math.sign(num)*Math.abs(num)
+
+             }
+             return result
         }
             
         
@@ -168,7 +184,7 @@ updatehtml()
     const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: [['Episilia'], ['Humio',"3x-4x"],['Chaossearch',"6x"],['Google',"7x"], ['ELK',"3x-7x"],  ['Splunk',"4x-14x"],  ['Logz.io',"7x-14x"], ['Datadog',"7x-14x"], ['SumoLogic',"14x-29x"]],
+            labels: [['Episilia',"1x"], ['Humio',"3x-4x"],['Chaossearch',"6x"],['Google',"7x"], ['ELK',"3x-7x"],  ['Splunk',"4x-14x"],  ['Logz.io',"7x-14x"], ['Datadog',"7x-14x"], ['SumoLogic',"14x-29x"]],
             datasets: [{
                 label: 'Min Cost',
                 data: [mydata["episilia"]["min_value"], mydata["Humio"]["min_value"], mydata["chaossearch"]["min_value"], mydata["Google"]["min_value"], mydata["ELK"]["min_value"], mydata["Splunk"]["min_value"], mydata["logz_io"]["min_value"], mydata["datadog"]["min_value"], mydata["Sumo"]["min_value"]],
@@ -227,16 +243,15 @@ updatehtml()
                 'rgba(65, 191, 231, 1)'
                 ],
                 random:[
-                `$${kFormatter(mydata["episilia"]["max_value"])}`,
-                `$${kFormatter(mydata["Humio"]["min_value"])}-$${kFormatter(mydata["Humio"]["max_value"])}`,
-                `$${kFormatter(mydata["chaossearch"]["max_value"])}`,
-                `$${kFormatter(mydata["Google"]["max_value"])}`,
-                `$${kFormatter(mydata["ELK"]["min_value"])}-$${kFormatter(mydata["ELK"]["max_value"])}`,
-                `$${kFormatter(mydata["Splunk"]["min_value"])}-$${kFormatter(mydata["Splunk"]["max_value"])}`,
-                `$${kFormatter(mydata["logz_io"]["min_value"])}-$${kFormatter(mydata["logz_io"]["max_value"])}`,
-                `$${kFormatter(mydata["datadog"]["min_value"])}-$${kFormatter(mydata["datadog"]["max_value"])}`,
-                `$${kFormatter(mydata["Sumo"]["min_value"])}-$${kFormatter(mydata["Sumo"]["max_value"])}`,
-                
+                `$${kFormatter(mydata["episilia"]["max_value"],false)}`,
+                `$${kFormatter(mydata["Humio"]["min_value"],true)}-$${kFormatter(mydata["Humio"]["max_value"],true)}`,
+                `$${kFormatter(mydata["chaossearch"]["max_value"],true)}`,
+                `$${kFormatter(mydata["Google"]["max_value"],true)}`,
+                `$${kFormatter(mydata["ELK"]["min_value"],true)}-$${kFormatter(mydata["ELK"]["max_value"],true)}`,
+                `$${kFormatter(mydata["Splunk"]["min_value"],true)}-$${kFormatter(mydata["Splunk"]["max_value"],true)}`,
+                `$${kFormatter(mydata["logz_io"]["min_value"],true)}-$${kFormatter(mydata["logz_io"]["max_value"],true)}`,
+                `$${kFormatter(mydata["datadog"]["min_value"],true)}-$${kFormatter(mydata["datadog"]["max_value"],true)}`,
+                `$${kFormatter(mydata["Sumo"]["min_value"],true)}-$${kFormatter(mydata["Sumo"]["max_value"],true)}`,      
                 ],
                 borderWidth: 0,
                 borderRadius: 2
@@ -246,7 +261,9 @@ updatehtml()
         },
         plugins:[ChartDataLabels],
         options: {
-            responsive: true,
+
+           // responsive: true,
+            //aspectRatio:2,
             plugins: {
                 title: {
                     display: true,
@@ -267,6 +284,7 @@ updatehtml()
                 },
                
                 datalabels:{
+                    
                     color: 'black',
                     anchor:'end',
                     align:'top',
@@ -402,15 +420,15 @@ function updateChart(){
     myChart.data.datasets[0].data=[mydata["episilia"]["min_value"], mydata["Humio"]["min_value"], mydata["chaossearch"]["min_value"], mydata["Google"]["min_value"], mydata["ELK"]["min_value"], mydata["Splunk"]["min_value"], mydata["logz_io"]["min_value"], mydata["datadog"]["min_value"], mydata["Sumo"]["min_value"]],
     myChart.data.datasets[1].data= [mydata["episilia"]["dispaly_max_value"], mydata["Humio"]["dispaly_max_value"], mydata["chaossearch"]["dispaly_max_value"], mydata["Google"]["dispaly_max_value"], mydata["ELK"]["dispaly_max_value"], mydata["Splunk"]["dispaly_max_value"], mydata["logz_io"]["dispaly_max_value"], mydata["datadog"]["dispaly_max_value"], mydata["Sumo"]["dispaly_max_value"]],
     myChart.data.datasets[1].random=[
-    `$${kFormatter(mydata["episilia"]["max_value"])}`,
-    `$${kFormatter(mydata["Humio"]["min_value"])}-$${kFormatter(mydata["Humio"]["max_value"])}`,
-    `$${kFormatter(mydata["chaossearch"]["max_value"])}`,
-    `$${kFormatter(mydata["Google"]["max_value"])}`,
-    `$${kFormatter(mydata["ELK"]["min_value"])}-$${kFormatter(mydata["ELK"]["max_value"])}`,
-    `$${kFormatter(mydata["Splunk"]["min_value"])}-$${kFormatter(mydata["Splunk"]["max_value"])}`,
-    `$${kFormatter(mydata["logz_io"]["min_value"])}-$${kFormatter(mydata["logz_io"]["max_value"])}`,
-    `$${kFormatter(mydata["datadog"]["min_value"])}-$${kFormatter(mydata["datadog"]["max_value"])}`,
-    `$${kFormatter(mydata["Sumo"]["min_value"])}-$${kFormatter(mydata["Sumo"]["max_value"])}`,
+    `$${kFormatter(mydata["episilia"]["max_value"],false)}`,
+    `$${kFormatter(mydata["Humio"]["min_value"],true)}-$${kFormatter(mydata["Humio"]["max_value"],true)}`,
+    `$${kFormatter(mydata["chaossearch"]["max_value"],true)}`,
+    `$${kFormatter(mydata["Google"]["max_value"],true)}`,
+    `$${kFormatter(mydata["ELK"]["min_value"],true)}-$${kFormatter(mydata["ELK"]["max_value"],true)}`,
+    `$${kFormatter(mydata["Splunk"]["min_value"],true)}-$${kFormatter(mydata["Splunk"]["max_value"],true)}`,
+    `$${kFormatter(mydata["logz_io"]["min_value"],true)}-$${kFormatter(mydata["logz_io"]["max_value"],true)}`,
+    `$${kFormatter(mydata["datadog"]["min_value"],true)}-$${kFormatter(mydata["datadog"]["max_value"],true)}`,
+    `$${kFormatter(mydata["Sumo"]["min_value"],true)}-$${kFormatter(mydata["Sumo"]["max_value"],true)}`,
     
     ]
     
